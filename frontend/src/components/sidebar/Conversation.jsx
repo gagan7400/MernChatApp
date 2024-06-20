@@ -1,5 +1,5 @@
-import { useSocketContext } from "../../context/SocketContext";
-import useConversation from "../../zustand/useConversation";
+import { useSocketContext } from "../../context/SocketContext.jsx";
+import useConversation from "../../zustand/useConversation.js";
 
 const Conversation = ({ conversation, lastIdx, emoji }) => {
 	const { selectedConversation, setSelectedConversation } = useConversation();
@@ -7,7 +7,7 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
 	const isSelected = selectedConversation?._id === conversation._id;
 	const { onlineUsers } = useSocketContext();
 	const isOnline = onlineUsers.includes(conversation._id);
-
+        //  console.log(onlineUsers , isOnline ,conversation._id)
 	return (
 		<>
 			<div

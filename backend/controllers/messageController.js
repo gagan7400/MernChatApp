@@ -1,5 +1,6 @@
 const { Conversation } = require("../models/conversation.model");
 const { Message } = require("../models/message.model");
+const { getReceiverSocketid ,io } = require("../socket/socket");
 
 let sendMessage = async (req, res) => {
     try {
@@ -26,12 +27,17 @@ let sendMessage = async (req, res) => {
         }
 
         // SOCKET IO FUNCTIONALITY  WILL GO HERE 
+        const recieverSocketId = getReceiverSocketid(receiverId)
+
+        if (recieverSocketId) {
+            io.to(recieverSocketId).emit("newMessage", newMessage)
+        }
         // this will run in parallel 
         await Promise.all([conversation.save(), newMessage.save()]);
         res.status(201).json(newMessage)
     } catch (error) {
         console.log("error in  sendmessages ", error.message)
-        res.status(500).json({ error: "Internal server error",msg:error.message })
+        res.status(500).json({ error: "Internal server error", msg: error.message })
     }
 };
 
@@ -45,7 +51,8 @@ let getMessages = async (req, res) => {
         }).populate("messages");// NOT REFERECE BUT ACTUAL MESSAGES
         if (!conversation) return res.status(200).json([]);
 
-        const messages = conversation.messages
+        const messages = conversation.messages;
+         
         res.status(200).json(messages)
 
     } catch (error) {

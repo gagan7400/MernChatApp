@@ -16,11 +16,13 @@ const messageSchema = new mongoose.Schema({
         required: true
     }
     //createdAt , updatedAt 
-}, { timestamps: true })
+},
+    { timestamps: true }
+)
 //timestamps by the use of this mongoose
 // can automaticaaly added the createdat
 // and updatedat feild for us ,and we 
 //can recive it in our frontend
 
-const Message = mongoose.model("Message",messageSchema)
-module.exports = {Message} 
+const Message = mongoose.model("Message", messageSchema)
+module.exports = { Message } 

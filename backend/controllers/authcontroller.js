@@ -3,8 +3,8 @@ const bcrypt = require("bcryptjs");
 const { generateTokenAndSetCookie } = require("../utils/genratetoken");
 let signupUser = async (req, res) => {
     try {
-        const { fullName, userName, password, confimPassword, gender } = req.body;
-        if (password !== confimPassword) {
+        const { fullName, userName, password, confirmPassword, gender } = req.body;
+        if (password !== confirmPassword) {
             return res.status(404).json({ error: "password and confirm password does not match" })
         }
         const user = await User.findOne({ userName });

@@ -7,7 +7,7 @@ require("dotenv").config();
 
 //Variables
 const PORT = process.env.PORT || 5000;
-const app = express();
+const {app,server}  = require("./socket/socket.js")  
 
 //Route Import
 const authRoutes = require("./routes/auth.routes");
@@ -24,7 +24,7 @@ app.use("/api/messages", messageRoute);
 app.use("/api/users", userRoute);
 
 // Server Calling 
-app.listen(PORT, (err) => {
+server.listen(PORT, (err) => {
     connectDB()
     console.log(err || "suuccessfull run on " + PORT)
 })
